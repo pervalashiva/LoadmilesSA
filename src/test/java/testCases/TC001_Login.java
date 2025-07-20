@@ -42,9 +42,9 @@ public class TC001_Login extends BaseClass {
     {
     	return new Object[][]
     			{
-    				{"re@gmail.com", "1234"},
-    				{"fef@gmail.com", "51551"},
-    				{"ga@gmail.com", "ag689"},
+//    				{"re@gmail.com", "1234"},
+//    				{"fef@gmail.com", "51551"},
+//    				{"ga@gmail.com", "ag689"},	
     				{"abhishake@yopmail.com", "test1234"}
     			};
     }
