@@ -14,7 +14,7 @@ on:
 
 jobs:
   test:
-    runs-on: windows-latest
+    runs-on: windows-latest  # Using Windows environment
 
     steps:
     # Checkout code from the repository
@@ -26,7 +26,7 @@ jobs:
       uses: actions/setup-java@v2
       with:
         java-version: '11'
-        distribution: 'temurin'
+        distribution: 'temurin'  # Explicitly specify the distribution
 
     # Cache Maven dependencies
     - name: Cache Maven dependencies
@@ -37,6 +37,8 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-maven-
 
-    # Run tests with Maven using testng.xml
+    # Run tests using Maven with the testng.xml
     - name: Run Selenium Tests with Maven
       run: mvn clean test -DsuiteXmlFile=src/test/resources/testng.xml
+      env:
+        DISPLAY: :99.0  # For X virtual framebuffer (Xvfb) in the CI environment
