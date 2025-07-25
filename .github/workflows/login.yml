@@ -27,10 +27,10 @@ jobs:
       with:
         java-version: '11'
 
-    # Install Maven manually
+    # Install Maven manually with the correct distribution
     - name: Install Maven
       run: |
-        choco install maven --version 3.8.1
+        choco install maven --version 3.8.1 --source=stable
         mvn -v  # Verify the Maven installation
 
     # Cache Maven dependencies for faster builds
