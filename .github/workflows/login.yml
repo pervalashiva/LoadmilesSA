@@ -21,13 +21,14 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Set up JDK (Java Development Kit)
+    # Set up JDK (Java Development Kit) with the correct distribution
     - name: Set up JDK 11
       uses: actions/setup-java@v2
       with:
         java-version: '11'
+        distribution: 'temurin'  # Explicitly specify the distribution
 
-    # Install Maven manually from Apache distribution (revised approach)
+    # Install Maven manually from Apache distribution
     - name: Install Maven
       run: |
         # Download Apache Maven 3.8.1
