@@ -27,17 +27,18 @@ jobs:
       with:
         java-version: '11'
 
-    # Install Maven manually from Apache distribution
+    # Install Maven manually from Apache distribution (revised approach)
     - name: Install Maven
       run: |
-        # Download Maven
+        # Download Apache Maven 3.8.1
         Invoke-WebRequest -Uri https://downloads.apache.org/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.zip -OutFile apache-maven.zip
-        # Extract Maven
+        # Extract the Maven zip archive to C:\apache-maven
         Expand-Archive -Path apache-maven.zip -DestinationPath C:\apache-maven
-        # Add Maven to PATH
+        # Add Maven to the system PATH
         $env:M2_HOME = "C:\apache-maven\apache-maven-3.8.1"
         $env:PATH = "$env:M2_HOME\bin;$env:PATH"
-        mvn -v  # Verify Maven installation
+        # Verify Maven version to ensure it is installed correctly
+        mvn -v
 
     # Cache Maven dependencies for faster builds
     - name: Cache Maven dependencies
