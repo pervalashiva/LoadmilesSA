@@ -28,17 +28,24 @@ jobs:
         java-version: '11'
         distribution: 'temurin'  # Explicitly specify the distribution
 
-    # Install Maven manually from Apache distribution using curl
+    # Install Maven manually from Apache distribution
     - name: Install Maven
       run: |
-        # Download Apache Maven 3.8.1 (latest stable version) using curl
-        curl -L https://downloads.apache.org/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.zip -o apache-maven.zip
-        # Extract the Maven zip archive to C:\apache-maven
+        # Check if Invoke-WebRequest (PowerShell) is available and download Maven 3.8.1
+        try {
+          Write-Host "Downloading Apache Maven..."
+          Invoke-WebRequest -Uri https://downloads.apache.org/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.zip -OutFile apache-maven.zip
+        } catch {
+          Write-Host "Download failed: $_"
+          exit 1
+        }
+
+        # Extract Maven zip file to C:\apache-maven
         Expand-Archive -Path apache-maven.zip -DestinationPath C:\apache-maven
-        # Add Maven to the system PATH
+        # Add Maven to system PATH
         $env:M2_HOME = "C:\apache-maven\apache-maven-3.8.1"
         $env:PATH = "$env:M2_HOME\bin;$env:PATH"
-        # Verify Maven version to ensure it is installed correctly
+        # Verify Maven version to ensure it’s installed
         mvn -v
 
     # Cache Maven dependencies for faster builds
