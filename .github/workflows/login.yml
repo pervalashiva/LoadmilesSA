@@ -14,21 +14,21 @@ on:
 
 jobs:
   test:
-    runs-on: windows-latest  # Using Windows environment
+    runs-on: windows-latest
 
     steps:
     # Checkout code from the repository
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Set up JDK (Java Development Kit) with the correct distribution
+    # Set up JDK (Java Development Kit)
     - name: Set up JDK 11
       uses: actions/setup-java@v2
       with:
         java-version: '11'
-        distribution: 'temurin'  # Explicitly specify the distribution
+        distribution: 'temurin'
 
-    # Cache Maven dependencies for faster builds
+    # Cache Maven dependencies
     - name: Cache Maven dependencies
       uses: actions/cache@v3
       with:
@@ -37,8 +37,6 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-maven-
 
-    # Run tests using Maven, using the selected test class from workflow_dispatch input
+    # Run tests with Maven using testng.xml
     - name: Run Selenium Tests with Maven
-      run: mvn clean test -Dtest=${{ github.event.inputs.class_name }}
-      env:
-        DISPLAY: :99.0  # For X virtual framebuffer (Xvfb) in the CI environment
+      run: mvn clean test -DsuiteXmlFile=src/test/resources/testng.xml
