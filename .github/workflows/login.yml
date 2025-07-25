@@ -1,6 +1,5 @@
 name: Run Selenium Tests with Maven
 
-
 on:
   workflow_dispatch:
     inputs:
@@ -15,42 +14,36 @@ on:
 
 jobs:
   test:
-    runs-on: windows-latest  # Using the latest Ubuntu environment
-
-    services:
-      # Use the official Selenium Docker image for Chrome and ChromeDriver
-      selenium:
-        image: selenium/standalone-chrome:latest
-        options: --shm-size 2g  # Ensure enough memory for the browser
+    runs-on: windows-latest  # Using Windows environment
 
     steps:
     # Checkout code from the repository
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3  # Updated to v3
 
     # Set up JDK (Java Development Kit)
     - name: Set up JDK 11
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v3  # Updated to v3
       with:
         java-version: '11'
 
     # Install Maven
     - name: Set up Maven
-      uses: actions/setup-maven@v2
+      uses: wzieba/maven-action@v3  # Updated to v3
       with:
         maven-version: '3.8.1'
 
     # Cache Maven dependencies for faster builds
     - name: Cache Maven dependencies
-      uses: actions/cache@v2
+      uses: actions/cache@v3  # Updated to v3
       with:
-        path: ~/.m2/repository
+        path: C:\Users\runneradmin\.m2\repository  # Path for Maven cache on Windows
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
 
-    # Run tests using Maven
+    # Run tests using Maven, using the selected test class from workflow_dispatch input
     - name: Run Selenium Tests with Maven
-      run: mvn clean test -Dtest=testcases.TC001_Login
+      run: mvn clean test -Dtest=${{ github.event.inputs.class_name }}
       env:
         DISPLAY: :99.0  # For X virtual framebuffer (Xvfb) in the CI environment
