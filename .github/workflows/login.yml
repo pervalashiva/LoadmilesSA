@@ -27,11 +27,11 @@ jobs:
       with:
         java-version: '11'
 
-    # Install Maven
-    - name: Set up Maven
-      uses: actions/setup-maven@v2  # Correct version for setup-maven
-      with:
-        maven-version: '3.8.1'
+    # Install Maven manually
+    - name: Install Maven
+      run: |
+        choco install maven --version 3.8.1
+        mvn -v  # Verify the Maven installation
 
     # Cache Maven dependencies for faster builds
     - name: Cache Maven dependencies
