@@ -31,8 +31,8 @@ jobs:
     # Install Maven manually from Apache distribution
     - name: Install Maven
       run: |
-        # Download Apache Maven 3.8.1
-        Invoke-WebRequest -Uri https://downloads.apache.org/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.zip -OutFile apache-maven.zip
+        # Download Apache Maven 3.8.1 from a valid mirror
+        Invoke-WebRequest -Uri https://mirrors.sonic.net/apache/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.zip -OutFile apache-maven.zip
         # Extract the Maven zip archive to C:\apache-maven
         Expand-Archive -Path apache-maven.zip -DestinationPath C:\apache-maven
         # Add Maven to the system PATH
