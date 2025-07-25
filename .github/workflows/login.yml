@@ -28,11 +28,11 @@ jobs:
         java-version: '11'
         distribution: 'temurin'  # Explicitly specify the distribution
 
-    # Install Maven manually from Apache distribution
+    # Install Maven manually from Apache distribution using curl
     - name: Install Maven
       run: |
-        # Download Apache Maven 3.8.1 from a valid mirror
-        Invoke-WebRequest -Uri https://mirrors.sonic.net/apache/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.zip -OutFile apache-maven.zip
+        # Download Apache Maven 3.8.1 (latest stable version) using curl
+        curl -L https://downloads.apache.org/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.zip -o apache-maven.zip
         # Extract the Maven zip archive to C:\apache-maven
         Expand-Archive -Path apache-maven.zip -DestinationPath C:\apache-maven
         # Add Maven to the system PATH
